@@ -21,7 +21,7 @@ $(document).ready(function () {
         playForm: $('.play-form'),
         levelInput: $(".level-input"),
         guessNumber: $("#guessnum"),
-
+        
         audioControl: function (dataset) {
             return $(`audio[data-link=${dataset}]`);
         },
@@ -33,11 +33,10 @@ $(document).ready(function () {
     DOM.playBtn.click(function () {
         guessnumber = Number.parseInt(Math.ceil(Math.random() * 10));
         chance = 5;
-        DOM.chancesLevelInput.show();
+        hideShow(DOM.playAgain, DOM.chancesLevelInput);
         DOM.msg.html("");
         DOM.numberHistory.html("");
-        DOM.playAgain.hide();
-        DOM.heart.removeClass("one-chance-less");
+        DOM.heart.removeClass("one-chance-less").addClass("bg-animate");
     })
 
     //1st parameter should be hide class and 2nd should be showclass
@@ -58,11 +57,16 @@ $(document).ready(function () {
         DOM.guessNumber.data('level-check', Number.parseInt(this.value));
     });
 
-  
+
     // To show the numbers entered till now by the user
-    function numHistory() {
+    function numHistory(guessnumber) {
         const enterednumbers = document.createElement("li");
-        enterednumbers.textContent = "Entered number was: " + `${userinput}`;
+        if (guessnumber) {
+            enterednumbers.innerHTML = `<span class="text-primary fw-bold">Correct number was: ${guessnumber}</span>`;
+        }
+        else {
+            enterednumbers.textContent = `Entered number was: ${userinput}`;
+        }
         document.querySelector(".number-history").appendChild(enterednumbers)
         queue.push(userinput);
     }
@@ -137,23 +141,32 @@ $(document).ready(function () {
 
             // smaller number
             if (userinput < guessnumber) {
-                DOM.msg.html("Sorry! The number entered is smaller than the actual number");
+                DOM.msg.html("Sorry! The number entered is smaller than the correct number");
                 gameSound(true);
+                chance--;
+                DOM.hearts(chance).addClass("one-chance-less");
+                DOM.hearts(chance).removeClass("bg-animate");
+                numHistory();
             }
 
             // greater number
             else if (userinput > guessnumber) {
-                DOM.msg.html("Sorry! The number entered is greater than the actual number")
+                DOM.msg.html("Sorry! The number entered is greater than the correct number");
                 gameSound(true);
+                 chance--;
+                 DOM.hearts(chance).addClass("one-chance-less");
+                 DOM.hearts(chance).removeClass("bg-animate");
+                 numHistory();
             }
 
-            chance--;
-            DOM.hearts().addClass("one-chance-less");
-            DOM.hearts().removeClass("bg-animate");
+           
+           
+          
             if (!chance) {
                 DOM.msg.html("<img src='images/fail-img.gif' class='soryimg img-fluid'>");
                 hideShow(DOM.levelInput, DOM.playAgain);
                 gameSound("outOfMoves");
+                numHistory(guessnumber);
             }
 
             //Congrats
@@ -161,9 +174,10 @@ $(document).ready(function () {
                 DOM.msg.html("<img src='images/success-img.gif' class='correct img-fluid' width='450'>");
                 hideShow(DOM.chancesLevelInput, DOM.playAgain);
                 gameSound("win");
+                numHistory(guessnumber);
             }
 
-            numHistory();
+           
             DOM.guessNumber.val('');
         }
 
