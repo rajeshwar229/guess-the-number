@@ -1,0 +1,71 @@
+html, body{
+    height: 100%;
+}
+
+.error {
+    color: red;
+    font-weight: 500;
+}
+
+body {
+    background: url(https://wallpaper-house.com/data/out/12/wallpaper2you_499488.jpg) no-repeat;
+    background-size: cover;
+    /* background-position-y: bottom;
+    background-position-x: center; */
+    background-position: top center;
+    font-family: 'Qwitcher Grypen', cursive !important;
+}
+
+.sounds {
+    box-shadow: 3px 3px 15px 0px rgba(0, 0, 0, 0.4),
+        0px 7px 13px -3px rgba(0, 0, 0, 0.3),
+        0px -3px 0px 0px rgba(0, 0, 0, 0.2) inset;
+}
+
+.one-chance-less {
+    opacity: 0.1;
+}
+
+.bg-animate {
+    animation: tweeder 1s infinite ease;
+}
+
+@keyframes tweeder {
+    0% {
+        transform: scale(1.1)
+    }
+
+    15% {
+        transform: scale(1.15)
+    }
+
+    35% {
+        transform: scale(1.1)
+    }
+
+    70% {
+        transform: scale(1.15)
+    }
+
+    90% {
+        transform: scale(1.1)
+    }
+
+    100% {
+        transform: scale(1.1)
+    }
+}
+
+.btn:hover {
+    cursor: pointer !important;
+    background: linear-gradient(120deg,
+            transparent,
+            #fff,
+            transparent);
+    transition: all 650ms;
+    color: #000 !important;
+}
+
+img {
+    cursor: pointer;
+}
