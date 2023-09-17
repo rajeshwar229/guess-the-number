@@ -93,6 +93,21 @@ $(document).ready(function () {
         }
     }
 
+     // Unmute the volume when game is active
+     $(window).focus(function(){
+        audioControl('music').each(function(){
+            if(this.dataset.status === 'on'){
+                this.muted = false;
+            }
+        });
+    });
+    // Mute the volume when game is inactive
+    $(window).blur(function(){
+        audioControl('music').each(function(){
+            this.muted = true;
+        });
+    });
+
     $(document).on("keypress", function (event) {
         if ($('.play-form').valid() && event.key === "Enter") {
             event.preventDefault();
